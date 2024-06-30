@@ -9,6 +9,7 @@ import rodrigo.salles.todo.service.TodoService;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RequestMapping
 @RestController("/api/todos")
 @RequiredArgsConstructor
