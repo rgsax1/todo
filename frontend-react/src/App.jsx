@@ -1,22 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import ListTodoComponent from "./components/ListTodoComponent.jsx";
 import HeaderComponent from "./components/HeaderComponent.jsx";
 import FooterComponent from "./components/FooterComponent.jsx";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import TodoComponent from "./components/TodoComponent.jsx";
 
 function App() {
 
-  return (
-    <>
-      <div>
-          <HeaderComponent></HeaderComponent>
-          <ListTodoComponent></ListTodoComponent>
-          <FooterComponent></FooterComponent>
-      </div>
-    </>
-  )
+    return (
+        <>
+
+            <BrowserRouter>
+                <HeaderComponent/>
+                <Routes>
+                    <Route path="/" element={<ListTodoComponent/>}/>
+                    <Route path="/todos" element={<ListTodoComponent/>}/>
+                    <Route path='/add-todo' element={<TodoComponent/>}></Route>
+                </Routes>
+                <FooterComponent/>
+            </BrowserRouter>
+
+        </>
+    )
 }
 
 export default App
