@@ -10,8 +10,8 @@ import rodrigo.salles.todo.service.TodoService;
 import java.util.List;
 
 @CrossOrigin("*")
-@RequestMapping
-@RestController("/api/todos")
+@RequestMapping("/api/todos")
+@RestController
 @RequiredArgsConstructor
 public class TodoController {
     private final TodoService todoService;
@@ -58,4 +58,3 @@ public class TodoController {
         return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
     }
 }
-
