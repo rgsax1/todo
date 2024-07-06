@@ -11,7 +11,7 @@ const ListTodoComponent = () => {
         listTodos();
     }, []);
 
-    function listTodos(){
+    function listTodos() {
         getAllTodos().then((response) => {
             setTodos(response.data);
         }).catch(error => {
@@ -19,17 +19,17 @@ const ListTodoComponent = () => {
         })
     }
 
-    function addNewTodo(){
+    function addNewTodo() {
         navigate('/add-todo')
     }
 
-    function updateTodo(id){
-       console.log(id);
-       navigate(`/update-todo/${id}`)
+    function updateTodo(id) {
+        console.log(id);
+        navigate(`/update-todo/${id}`)
 
     }
 
-    function removeTodo(id){
+    function removeTodo(id) {
         deleteTodo(id).then((response) => {
             listTodos()
         }).catch(error => {
@@ -37,7 +37,7 @@ const ListTodoComponent = () => {
         })
     }
 
-    function markCompleteTodo(id){
+    function markCompleteTodo(id) {
         completeTodo(id).then((response) => {
             listTodos()
         }).catch(error => {
@@ -45,7 +45,7 @@ const ListTodoComponent = () => {
         })
     }
 
-    function markInCompleteTodo(id){
+    function markInCompleteTodo(id) {
         inCompleteTodo(id).then((response) => {
             listTodos()
         }).catch(error => {
@@ -76,10 +76,16 @@ const ListTodoComponent = () => {
                                 <td>{todo.description}</td>
                                 <td>{todo.completed ? 'YES' : 'NO'}</td>
                                 <td>
-                                    <button className='btn btn-info' onClick={() => updateTodo(todo.id)}></button>
-                                    <button className='btn btn-danger' onClick={() => removeTodo(todo.id)} style={{marginLeft: "10px"}}>Delete</button>
-                                <button className="btn btn-success" onClick={() => markCompleteTodo(todo.id)} style={{marginLeft: "10px"}}>Complete</button>
-                                <button className="btn btn-info" onClick={() => markInCompleteTodo(todo.id)} style={{marginLeft: "10px"}}>In Complete</button>
+                                    <button className='btn btn-info' onClick={() => updateTodo(todo.id)}>Update</button>
+                                    <button className='btn btn-danger' onClick={() => removeTodo(todo.id)}
+                                            style={{marginLeft: "10px"}}>Delete
+                                    </button>
+                                    <button className="btn btn-success" onClick={() => markCompleteTodo(todo.id)}
+                                            style={{marginLeft: "10px"}}>Complete
+                                    </button>
+                                    <button className="btn btn-info" onClick={() => markInCompleteTodo(todo.id)}
+                                            style={{marginLeft: "10px"}}>In Complete
+                                    </button>
                                 </td>
                             </tr>
                         )
