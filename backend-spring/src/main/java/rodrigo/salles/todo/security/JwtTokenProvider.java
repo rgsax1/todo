@@ -1,6 +1,6 @@
 package rodrigo.salles.todo.security;
 
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,32 +12,30 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    /*
-    app.jwt-secret=0e809461da5a167b9bd77c4487e84a575522997b58d607f49d5cae8d086cce9b
-    app.jet-expiration-milliseconds=604800000
-     */
-
 
     @Value("${app.jwt-secret}")
     private String jwtSecret;
 
     @Value("${app.jwt-expiration-milliseconds}")
-    private String jwtExpirationDate;
+    private long jwtExpirationDate;
 
-    //Generate JWT token
-    public String generateToken(Authentication authentication) {
+    // Generate JWT token
+    public String generateToken(Authentication authentication){
         String username = authentication.getName();
+
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + Long.parseLong(jwtExpirationDate));
+
+        Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
+
         String token = Jwts.builder()
                 .setSubject(username)
-                .setIssuedAt(currentDate)
+                .setIssuedAt(new Date())
                 .setExpiration(expireDate)
                 .signWith(key())
                 .compact();
+
         return token;
     }
-
 
     private Key key(){
         return Keys.hmacShaKeyFor(
@@ -45,13 +43,26 @@ public class JwtTokenProvider {
         );
     }
 
-
-    //Validate JWT Token
-    public boolean validateToken(String token) {
-        return Jwts.parser()
-                .verifyWith(getPublicSigningKey())
+    // Get username from JWT token
+    public String getUsername(String token){
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key())
                 .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .parseClaimsJws(token)
+                .getBody();
+
+        String username = claims.getSubject();
+
+        return username;
     }
+
+    // Validate JWT Token
+    public boolean validateToken(String token){
+        Jwts.parserBuilder()
+                .setSigningKey(key())
+                .build()
+                .parse(token);
+        return true;
+    }
+
 }
