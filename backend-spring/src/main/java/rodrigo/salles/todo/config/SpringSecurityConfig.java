@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import rodrigo.salles.todo.security.JwtAuthenticationEntryPoint;
-import rodrigo.salles.todo.security.JwtAuthenticationFilter;
+import rodrigo.salles.todo.security.JwtTokenProvider;
 
 @Configuration
 @EnableMethodSecurity
@@ -26,7 +26,7 @@ public class SpringSecurityConfig {
 
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
-    private JwtAuthenticationFilter authenticationFilter;
+    private JwtTokenProvider authenticationFilter;
 
     @Bean
     public static PasswordEncoder passwordEncoder(){
