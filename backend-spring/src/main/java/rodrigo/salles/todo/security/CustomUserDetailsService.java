@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username or Email"));
 
         Set<GrantedAuthority> authorities = user.getRoles().stream()
-                .map((role) -> new SimpleGrantedAuthority(role.getName()))
+                .map((userRole) -> new SimpleGrantedAuthority(userRole.getRole().name()))
                 .collect(Collectors.toSet());
 
         return new org.springframework.security.core.userdetails.User(
